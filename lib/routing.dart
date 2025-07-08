@@ -1,3 +1,4 @@
+import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouting extends StatefulWidget {
