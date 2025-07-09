@@ -1,5 +1,6 @@
 import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
 import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
+import 'package:dioxide_mobile/pages/signuppage/lib/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRouting extends StatefulWidget {
@@ -18,6 +19,7 @@ class _AppRoutingState extends State<AppRouting> {
       routes: {
         '/': (context) => LogoPage(),
         '/login' : (context) => LoginPage(),
+        '/signup' : (context) => SignUpPage(),
       },
     );
   }

@@ -1,14 +1,13 @@
-import 'package:dioxide_mobile/pages/signuppage/lib/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   String  username = '';
   String  password = '';
 
@@ -20,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
         titleSpacing: 40,
         backgroundColor: Colors.white,
       ),
@@ -33,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(height: 40),
-              Text('Sign In',
+              Text('Sign Up',
                 style: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 40),
@@ -107,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       password = passwordController.text;
                     });
                   },
-                  child: Text('Sign In',
+                  child: Text('Sign Up',
                     style: TextStyle(fontFamily: 'Roboto', color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
@@ -125,16 +123,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Don\'t have an account?',
+                    Text('Already have an account?',
                       style: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontSize: 20, fontWeight: FontWeight.normal),
                     ),
                     TextButton(
                       onPressed: () {
-                        //Navigator.pushNamed(context, '/signup');
-                        Navigator.pushReplacementNamed(context, '/signup');
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                        Navigator.pushReplacementNamed(context, '/login');
                       },
-                      child: Text('Sign Up',
+                      child: Text('Sign In',
                         style: TextStyle(fontFamily: 'Roboto', color: Colors.deepPurple, fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
