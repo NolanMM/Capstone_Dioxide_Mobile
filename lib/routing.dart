@@ -1,3 +1,4 @@
+import 'package:dioxide_mobile/pages/homepage/lib/home_page.dart';
 import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
 import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
 import 'package:dioxide_mobile/pages/signuppage/lib/sign_up_page.dart';
@@ -20,6 +21,7 @@ class _AppRoutingState extends State<AppRouting> {
         '/': (context) => LogoPage(),
         '/login' : (context) => LoginPage(),
         '/signup' : (context) => SignUpPage(),
+        '/home' : (context) => HomePage(),
       },
     );
   }

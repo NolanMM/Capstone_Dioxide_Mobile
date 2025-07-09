@@ -1,4 +1,3 @@
-import 'package:dioxide_mobile/pages/signuppage/lib/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -106,6 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                       username = usernameController.text;
                       password = passwordController.text;
                     });
+                    //Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushNamed(context, '/home');
                   },
                   child: Text('Sign In',
                     style: TextStyle(fontFamily: 'Roboto', color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),

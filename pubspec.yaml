@@ -61,6 +61,7 @@ flutter:
     - assets/64x64_logo.png
     - assets/160x160_logo.png
     - assets/250x400_logo.png
+    - assets/news_image_placeholder.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
