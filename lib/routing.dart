@@ -1,3 +1,4 @@
+import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
 import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _AppRoutingState extends State<AppRouting> {
       initialRoute: '/',
       routes: {
         '/': (context) => LogoPage(),
+        '/login' : (context) => LoginPage(),
       },
     );
   }
