@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: Icon(Icons.home, color: Colors.black),
+              icon: Icon(Icons.home, color: Colors.black, size: 28,),
               onPressed: () {
                 // Navigate to Home Page
               },
@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
                 // Navigate to Profile Page
               },
             ),
-            // Grahp icon
           ],
         ),
       ),
@@ -360,7 +359,6 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              
                               Container(
                                 width: 150,
                                 height: 150,
