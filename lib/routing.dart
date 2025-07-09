@@ -1,3 +1,4 @@
+import 'package:dioxide_mobile/pages/graphpage/lib/graph_page.dart';
 import 'package:dioxide_mobile/pages/homepage/lib/home_page.dart';
 import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
 import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
@@ -26,6 +27,7 @@ class _AppRoutingState extends State<AppRouting> {
         '/home' : (context) => HomePage(),
         '/profile' : (context) => ProfilePage(),
         '/notification' : (context) => NotificationPage(),
+        '/graph' : (context) => const StockChartPage(),
       },
     );
   }

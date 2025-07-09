@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.bar_chart, color: Colors.black),
               onPressed: () {
                 // Navigate to Graph Page
+                Navigator.pushReplacementNamed(context, '/graph');
               },
             ),
             IconButton(
