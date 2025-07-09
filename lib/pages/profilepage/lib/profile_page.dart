@@ -38,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
               icon: Icon(Icons.bar_chart, color: Colors.black),
               onPressed: () {
                 // Navigate to Graph Page
+                Navigator.pushReplacementNamed(context, '/graph');
               },
             ),
             IconButton(
