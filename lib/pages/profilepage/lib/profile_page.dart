@@ -44,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
               icon: Icon(Icons.notifications, color: Colors.black),
               onPressed: () {
                 // Navigate to Notifications Page
+                Navigator.pushReplacementNamed(context, '/notification');
               },
             ),
             IconButton(
@@ -69,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Almanac',
+                      Text('Profile',
                         style: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
                       ),
                       Container(
@@ -157,6 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Implement logout functionality
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(360, 60),

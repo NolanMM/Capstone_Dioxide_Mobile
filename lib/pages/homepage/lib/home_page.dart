@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.notifications, color: Colors.black),
               onPressed: () {
-                // Navigate to Notifications Page
+                Navigator.pushReplacementNamed(context, '/notification');
               },
             ),
             IconButton(
@@ -292,7 +292,6 @@ class _HomePageState extends State<HomePage> {
                         border: Border(
                           top: BorderSide(color: Colors.black, width: 1),
                           //bottom: BorderSide(color: Colors.black, width: 1),
-                          // left and right are omitted → no border there
                         ),
                       ),
                       child: Column(
