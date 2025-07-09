@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.person, color: Colors.black),
               onPressed: () {
-                // Navigate to Profile Page
+                Navigator.pushReplacementNamed(context, '/profile');
               },
             ),
           ],
