@@ -1,5 +1,6 @@
+import 'package:dioxide_mobile/models/login_dto.dart';
 import 'package:dioxide_mobile/models/sign_up_dto.dart';
-import 'package:dioxide_mobile/services/register_service.dart';
+import 'package:dioxide_mobile/services/register_service/register_service.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -10,18 +11,19 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String  password = '';
-  String email = '';
-  String first_name = '';
-  String last_name = '';
 
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
+  SignUpDto? register_dto;
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
+    register_dto = arguments['register_dto'] as SignUpDto?;
+
+    final TextEditingController passwordController = TextEditingController(text: register_dto?.password ?? '');
+    final TextEditingController emailController = TextEditingController(text: register_dto?.email ?? '');
+    final TextEditingController firstNameController = TextEditingController(text: register_dto?.first_name ?? '');
+    final TextEditingController lastNameController = TextEditingController(text: register_dto?.last_name ?? '');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -148,15 +150,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   onPressed: () async{
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     backgroundColor: Colors.redAccent,
-                    //     content: Text('Button pressed! The username is ${usernameController.text}' , style: TextStyle(fontFamily: 'Roboto', color: Colors.white))),
-                    // );
-                    // setState(() {
-                    //   username = usernameController.text;
-                    //   password = passwordController.text;
-                    // });
+                    if (emailController.text.isEmpty || passwordController.text.isEmpty || firstNameController.text.isEmpty || lastNameController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.redAccent,
+                          content: Text('Please fill in all fields above to register', style: TextStyle(fontFamily: 'Roboto', color: Colors.white, fontSize: 18)),
+                        ),
+                      );
+                      return;
+                    }
                     final register_dto = SignUpDto(
                       username: emailController.text.trim(),
                       password: passwordController.text,
@@ -166,13 +168,16 @@ class _SignUpPageState extends State<SignUpPage> {
                     );
                     try {
                       final data_response = await SignUpService.signup(register_dto);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('Registration request sent successful! Please check email ${data_response.username} for the OTP code', style: TextStyle(fontFamily: 'Roboto', color: Colors.white)),
-                        ),
-                      );
-                      //Navigator.pushReplacementNamed(context, '/otp', arguments: register_dto);
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     backgroundColor: Colors.green,
+                      //     content: Text('Registration request sent successful! Please check email ${data_response.username} for the OTP code', style: TextStyle(fontFamily: 'Roboto', color: Colors.white)),
+                      //   ),
+                      // );
+                      Navigator.pushReplacementNamed(context, '/otp', arguments: {
+                        'register_dto': register_dto,
+                        'session_id': data_response.sessionId,
+                      });
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -205,7 +210,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/login');
+                          Navigator.pushReplacementNamed(context, '/login', arguments: {
+                            'login_dto': LoginDto(username: '', password: ''),
+                          });
                       },
                       child: Text('Sign In',
                         style: TextStyle(fontFamily: 'Roboto', color: Colors.deepPurple, fontSize: 20, fontWeight: FontWeight.bold),

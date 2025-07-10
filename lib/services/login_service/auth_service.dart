@@ -1,6 +1,6 @@
 import 'package:dioxide_mobile/entities/user.dart';
 import 'package:http/http.dart' as http;
-import '../models/login_dto.dart';
+import '../../models/login_dto.dart';
 import 'dart:convert';
 import 'dart:io';
 

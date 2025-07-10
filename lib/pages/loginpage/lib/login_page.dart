@@ -1,4 +1,5 @@
-import 'package:dioxide_mobile/services/auth_service.dart';
+import 'package:dioxide_mobile/models/sign_up_dto.dart';
+import 'package:dioxide_mobile/services/login_service/auth_service.dart';
 import 'package:dioxide_mobile/models/login_dto.dart';
 import 'package:flutter/material.dart';
 
@@ -10,14 +11,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String  username = '';
-  String  password = '';
 
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  LoginDto? login_dto;
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
+    if (arguments != null) {
+      login_dto = arguments['login_dto'] as LoginDto?;
+    }
+
+    final TextEditingController usernameController = TextEditingController(text: login_dto?.username ?? '');
+    final TextEditingController passwordController = TextEditingController(text: login_dto?.password ?? '');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -111,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       );
                       // only navigate if login succeeded:
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/home', arguments: {
+                        'user': user,
+                      });
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -151,7 +159,15 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       onPressed: () {
                         //Navigator.pushNamed(context, '/signup');
-                        Navigator.pushReplacementNamed(context, '/signup');
+                        Navigator.pushReplacementNamed(context, '/signup', arguments: {
+                          'register_dto': SignUpDto(
+                            username: '',
+                            password: '',
+                            email: '',
+                            first_name: '',
+                            last_name: '',
+                          ),
+                        });
                         //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
                       },
                       child: Text('Sign Up',

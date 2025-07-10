@@ -1,3 +1,4 @@
+import 'package:dioxide_mobile/entities/user.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,8 +9,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  User? user;
+
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
+    user = arguments['user'] as User?;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -50,7 +56,9 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.person, color: Colors.black),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/profile');
+                Navigator.pushReplacementNamed(context, '/profile', arguments: {
+                  'user': user,
+                });
               },
             ),
           ],

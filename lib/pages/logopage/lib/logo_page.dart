@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
+import 'package:dioxide_mobile/models/login_dto.dart';
 import 'package:flutter/material.dart';
 
 class LogoPage extends StatefulWidget {
@@ -14,9 +14,9 @@ class _LogoPageState extends State<LogoPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const LoginPage()),
-      );
+      Navigator.pushReplacementNamed(context, '/login', arguments: {
+        'login_dto': LoginDto(username: '', password: ''),
+      });
     });
   }
 
