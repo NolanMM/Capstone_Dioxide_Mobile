@@ -1,4 +1,4 @@
-import 'package:dioxide_mobile/pages/graphpage/lib/models/Historical_Prices_Model.dart';
+import 'package:dioxide_mobile/models/Historical_Prices_Model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';

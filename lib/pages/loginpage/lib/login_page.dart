@@ -1,3 +1,5 @@
+import 'package:dioxide_mobile/services/auth_service.dart';
+import 'package:dioxide_mobile/models/login_dto.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -95,21 +97,38 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     backgroundColor: Colors.redAccent,
-                    //     content: Text('Button pressed! The username is ${usernameController.text}' , style: TextStyle(fontFamily: 'Roboto', color: Colors.white))),
-                    // );
-                    setState(() {
-                      username = usernameController.text;
-                      password = passwordController.text;
-                    });
-                    //Navigator.pushReplacementNamed(context, '/home');
-                    Navigator.pushNamed(context, '/home');
+                  onPressed: () async {
+                    final dto = LoginDto(
+                      username: usernameController.text.trim(),
+                      password: passwordController.text,
+                    );
+                    try {
+                      final user = await AuthService.login(dto);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Welcome Back, ${user.firstName} ${user.lastName}!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                      // only navigate if login succeeded:
+                      Navigator.pushReplacementNamed(context, '/home');
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(e.toString()),
+                          backgroundColor: Colors.redAccent,
+                        ),
+                      );
+                    }
                   },
-                  child: Text('Sign In',
-                    style: TextStyle(fontFamily: 'Roboto', color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                  child: Text(
+                    'Sign In',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
