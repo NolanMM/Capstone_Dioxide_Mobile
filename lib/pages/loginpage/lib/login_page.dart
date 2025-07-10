@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 80),
               SizedBox(
                 width: 400,
                 height: 55,

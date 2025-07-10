@@ -1,3 +1,5 @@
+import 'package:dioxide_mobile/models/sign_up_dto.dart';
+import 'package:dioxide_mobile/services/register_service.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -8,11 +10,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String  username = '';
   String  password = '';
+  String email = '';
+  String first_name = '';
+  String last_name = '';
 
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +30,13 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0, bottom: 30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 40),
+              //SizedBox(height: 40),
               Text('Sign Up',
                 style: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold),
               ),
@@ -38,10 +44,10 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 width: 430, 
                 child: TextField(
-                  controller: usernameController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    labelText: 'Username',
+                    labelText: 'Email',
                     labelStyle: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
@@ -52,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderSide: BorderSide(color: Colors.black, width: 2.0),
                       //borderRadius: BorderRadius.circular(40.0),
                     ),
-                    suffixIcon: Icon(Icons.person, color: Colors.black),
+                    suffixIcon: Icon(Icons.email, color: Colors.black),
                   ),
                   style: TextStyle(fontFamily: 'Roboto', color: Colors.black),
                 ),
@@ -84,6 +90,53 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               SizedBox(height: 40),
               SizedBox(
+                width: 430, 
+                child: TextField(
+                  controller: firstNameController,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    labelText: 'First Name',
+                    labelStyle: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0, style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    suffixIcon: Icon(Icons.person, color: Colors.black),
+                  ),
+                  style: TextStyle(fontFamily: 'Roboto', color: Colors.black),
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              SizedBox(height: 40),
+              SizedBox(
+                width: 430, 
+                child: TextField(
+                  controller: lastNameController,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    labelText: 'Last Name',
+                    labelStyle: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0, style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    suffixIcon: Icon(Icons.person, color: Colors.black),
+                  ),
+                  style: TextStyle(fontFamily: 'Roboto', color: Colors.black),
+                  keyboardType: TextInputType.text,
+                ),
+              ),
+              SizedBox(height: 80),
+              
+              SizedBox(
                 width: 400,
                 height: 55,
                 child: ElevatedButton(
@@ -94,16 +147,40 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async{
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
                     //     backgroundColor: Colors.redAccent,
                     //     content: Text('Button pressed! The username is ${usernameController.text}' , style: TextStyle(fontFamily: 'Roboto', color: Colors.white))),
                     // );
-                    setState(() {
-                      username = usernameController.text;
-                      password = passwordController.text;
-                    });
+                    // setState(() {
+                    //   username = usernameController.text;
+                    //   password = passwordController.text;
+                    // });
+                    final register_dto = SignUpDto(
+                      username: emailController.text.trim(),
+                      password: passwordController.text,
+                      email: emailController.text.trim(),
+                      first_name: firstNameController.text.trim(),
+                      last_name: lastNameController.text.trim(),
+                    );
+                    try {
+                      final data_response = await SignUpService.signup(register_dto);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Registration request sent successful! Please check email ${data_response.username} for the OTP code', style: TextStyle(fontFamily: 'Roboto', color: Colors.white)),
+                        ),
+                      );
+                      //Navigator.pushReplacementNamed(context, '/otp', arguments: register_dto);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.redAccent,
+                          content: Text('Registration failed: $e', style: TextStyle(fontFamily: 'Roboto', color: Colors.white)),
+                        ),
+                      );
+                    }
                   },
                   child: Text('Sign Up',
                     style: TextStyle(fontFamily: 'Roboto', color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
