@@ -67,10 +67,14 @@ class _ProfilePageState extends State<ProfilePage> {
               Navigator.pushReplacementNamed(context, '/graph');
             }),
             IconButton(icon: Icon(Icons.notifications, color: Colors.black), onPressed: () {
-              Navigator.pushReplacementNamed(context, '/notification');
+              Navigator.pushReplacementNamed(context, '/notification', arguments: {
+                'user': user,
+              });
             }),
             IconButton(icon: Icon(Icons.person, color: Colors.black, size: 28), onPressed: () {
-              Navigator.pushReplacementNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, '/profile', arguments: {
+                'user': user,
+              });
             }),
           ],
         ),

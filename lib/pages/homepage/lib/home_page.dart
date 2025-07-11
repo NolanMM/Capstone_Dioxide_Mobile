@@ -50,7 +50,9 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(Icons.notifications, color: Colors.black),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/notification');
+                Navigator.pushReplacementNamed(context, '/notification', arguments: {
+                  'user': user,
+                });
               },
             ),
             IconButton(
