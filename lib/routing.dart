@@ -1,10 +1,12 @@
-import 'package:dioxide_mobile/pages/graphpage/lib/graph_page.dart';
+import 'package:dioxide_mobile/pages/graphpage/lib/graph_widget.dart';
 import 'package:dioxide_mobile/pages/homepage/lib/home_page.dart';
 import 'package:dioxide_mobile/pages/loginpage/lib/login_page.dart';
 import 'package:dioxide_mobile/pages/logopage/lib/logo_page.dart';
 import 'package:dioxide_mobile/pages/notificationpage/lib/notification_page.dart';
 import 'package:dioxide_mobile/pages/otppage/lib/otp_page.dart';
+import 'package:dioxide_mobile/pages/profilepage/lib/edit_profile_page.dart';
 import 'package:dioxide_mobile/pages/profilepage/lib/profile_page.dart';
+import 'package:dioxide_mobile/pages/searchpage/lib/search_page.dart';
 import 'package:dioxide_mobile/pages/signuppage/lib/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +30,10 @@ class _AppRoutingState extends State<AppRouting> {
         '/home' : (context) => HomePage(),
         '/profile' : (context) => ProfilePage(),
         '/notification' : (context) => NotificationPage(),
-        '/graph' : (context) => const StockChartPage(),
+        '/graph' : (context) => const GraphWidgetPage(),
         '/otp' : (context) => const OTPPage(),
+        '/search' : (context) => const SearchPage(),
+        '/editProfile' : (context) => const EditProfilePage(),
       },
     );
   }
