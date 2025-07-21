@@ -23,4 +23,22 @@ class User {
         firstName: json['first_name'] as String,
         lastName: json['last_name'] as String,
       );
+  
+  User copyWith({
+    int? id,
+    String? username,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? message,
+  }) {
+    return User(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      message: message ?? this.message,
+    );
+  }
 }
