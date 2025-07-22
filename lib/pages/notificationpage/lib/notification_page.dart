@@ -49,14 +49,18 @@ class _NotificationPageState extends State<NotificationPage> {
             IconButton(
               icon: Icon(Icons.search, color: Colors.black),
               onPressed: () {
-                // Navigate to Search Page
+                Navigator.pushReplacementNamed(context, '/search', arguments: {
+                  'user': user,
+                });
               },
             ),
             IconButton(
               icon: Icon(Icons.bar_chart, color: Colors.black),
               onPressed: () {
                 // Navigate to Graph Page
-                Navigator.pushReplacementNamed(context, '/graph');
+                Navigator.pushReplacementNamed(context, '/graph', arguments: {
+                  'user': user,
+                });
               },
             ),
             IconButton(
@@ -139,7 +143,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         onTap: () => NewsService.openInChrome(article.headline),
                         child: Container(
                           width: double.infinity,
-                          height: 280,
+                          height: 320,
                           margin: const EdgeInsets.only(bottom: 0),
                           decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -200,10 +204,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           ),
                                         ),
+                                        if (article.positiveValue >= article.negativeValue && article.positiveValue >= article.neutralValue) ...[
                                         Padding(
                                           padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
                                           child: Text(
-                                            'Updated on: ${article.datetime.day}/${article.datetime.month}/${article.datetime.year}',
+                                            'Updated on: ${article.datetime.day}/${article.datetime.month}/${article.datetime.year}\n\nSentiment: ${article.positiveValue.toStringAsFixed(2)} - Positive',
                                             style: const TextStyle(
                                               fontFamily: 'Roboto',
                                               color: Colors.black,
@@ -212,6 +217,33 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           ),
                                         ),
+                                        ] else if (article.negativeValue >= article.positiveValue && article.negativeValue >= article.neutralValue) ...[
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
+                                            child: Text(
+                                              'Updated on: ${article.datetime.day}/${article.datetime.month}/${article.datetime.year}\n\nSentiment: ${article.negativeValue.toStringAsFixed(2)} - Negative',
+                                              style: const TextStyle(
+                                                fontFamily: 'Roboto',
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ] else ...[
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
+                                            child: Text(
+                                              'Updated on: ${article.datetime.day}/${article.datetime.month}/${article.datetime.year}\n\nSentiment: ${article.neutralValue.toStringAsFixed(2)} - Neutral',
+                                              style: const TextStyle(
+                                                fontFamily: 'Roboto',
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ],
                                     ),
                                   ),
@@ -229,8 +261,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                       ),
                                     ),
                                   ),
+                                  
                                 ],
+                                
                               ),
+                              
                             ],
                           ),
                         ),

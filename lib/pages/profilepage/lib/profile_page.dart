@@ -1,6 +1,7 @@
 import 'package:dioxide_mobile/models/login_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:dioxide_mobile/entities/user.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -42,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final String currentDate = DateFormat('EEEE, d MMMM').format(DateTime.now());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -62,9 +64,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               },
             ),
-            IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: () {}),
+            IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: () {
+              Navigator.pushReplacementNamed(context, '/search', arguments: {
+                'user': user,
+              });
+            }),
             IconButton(icon: Icon(Icons.bar_chart, color: Colors.black), onPressed: () {
-              Navigator.pushReplacementNamed(context, '/graph');
+              Navigator.pushReplacementNamed(context, '/graph', arguments: {
+                'user': user,
+              });
             }),
             IconButton(icon: Icon(Icons.notifications, color: Colors.black), onPressed: () {
               Navigator.pushReplacementNamed(context, '/notification', arguments: {
@@ -96,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 40),
               Divider(color: Colors.black),
-              const Text('Wednesday, 8 July',
+              Text(currentDate,
                 style: TextStyle(fontFamily: 'Roboto', color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Divider(color: Colors.black),
@@ -143,6 +151,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           icon: const Icon(Icons.edit, color: Colors.black),
                           onPressed: () {
                             // Navigate to Edit Profile Page
+                            Navigator.pushNamed(context, '/editProfile', arguments: {
+                              'user': user,
+                            });
                           },
                         ),
                       ],
