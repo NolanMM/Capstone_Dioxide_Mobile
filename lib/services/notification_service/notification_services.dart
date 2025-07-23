@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 
 class NewsService {
   static final String _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
+      ? 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie'
+      : 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie';
 
   static Future<List<NewsArticle>> fetchArticles(int numberOfDays) async {
     final url = Uri.parse('$_baseUrl/get_news_sentiment_by_days/$numberOfDays');

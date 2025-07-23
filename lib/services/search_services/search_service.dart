@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SearchService {
-  static const String _baseUrl = 'http://ec2-18-116-65-93.us-east-2.compute.amazonaws.com:8000/api/analyze/';
+  static const String _baseUrl = 'http://ec2-3-147-66-29.us-east-2.compute.amazonaws.com:8000/api/analyze/';
 
   static Future<SearchAnalysisApiResponse> analyzeQuery(String query) async {
     if (query.isEmpty) {

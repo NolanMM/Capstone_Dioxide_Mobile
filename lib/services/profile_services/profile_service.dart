@@ -6,8 +6,8 @@ import 'dart:io';
 
 class ProfileService {
   static final _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
+      ? 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie'
+      : 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie';
 
   static Future<String> updateUsername(int? userId, UpdateUsernameDto dto) async {
     if (userId == null) {

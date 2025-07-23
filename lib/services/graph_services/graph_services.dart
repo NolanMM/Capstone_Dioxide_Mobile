@@ -7,11 +7,11 @@ import 'dart:io';
 
 class GraphService {
   static final _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
-
+      ? 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie'
+      : 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie';
+      
   static const _predictionApiBaseUrl =
-      'http://ec2-18-116-65-93.us-east-2.compute.amazonaws.com:8000';
+      'http://ec2-3-147-66-29.us-east-2.compute.amazonaws.com:8000';
 
   static Future<List<StockAvailableDto>> getAvailableStockSymbols() async {
     try {
