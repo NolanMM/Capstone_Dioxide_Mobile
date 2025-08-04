@@ -9,9 +9,6 @@ class GraphService {
   static final _baseUrl = Platform.isAndroid
       ? 'http://10.0.2.2:8000/api'
       : 'http://127.0.0.1:8000/api';
-      
-  static const _predictionApiBaseUrl =
-      'http://ec2-18-227-114-0.us-east-2.compute.amazonaws.com:8000';
 
   static Future<List<StockAvailableDto>> getAvailableStockSymbols() async {
     try {

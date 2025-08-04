@@ -2,8 +2,13 @@ import 'package:dioxide_mobile/models/search_analysis_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'dart:io';
+
 class SearchService {
-  static const String _baseUrl = 'http://ec2-18-227-114-0.us-east-2.compute.amazonaws.com:8000/api/analyze/';
+  //static const String _baseUrl = 'http://ec2-18-227-114-0.us-east-2.compute.amazonaws.com:8000/api/analyze/';
+  static final _baseUrl = Platform.isAndroid
+      ? 'http://10.0.2.2:8000/api'
+      : 'http://127.0.0.1:8000/api';
 
   static Future<SearchAnalysisApiResponse> analyzeQuery(String query) async {
     if (query.isEmpty) {
@@ -11,8 +16,10 @@ class SearchService {
     }
 
     try {
+      final uri = Uri.parse('$_baseUrl/analyze/');
+
       final response = await http.post(
-        Uri.parse(_baseUrl),
+        uri,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'query': query}),
       );
