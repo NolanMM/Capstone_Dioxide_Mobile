@@ -8,18 +8,18 @@ import 'dart:io';
 
 class SignUpService {
   static final _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
+      ? 'http://10.0.2.2:8000/api'
+      : 'http://127.0.0.1:8000/api';
 
   static Future<RegisterUserResponse> signup(SignUpDto signupdto) async {
-    final uri = Uri.parse('$_baseUrl/register_user/request');
+    final uri = Uri.parse('$_baseUrl/v2/signup/');
 
     final response = await http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(signupdto.toJson()),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return RegisterUserResponse.fromJson(jsonDecode(response.body));
     } else {
       String msg = 'Unknown error';
@@ -31,11 +31,12 @@ class SignUpService {
   }
 
   static Future<OTPResponse> verifyOTP(OtpDto otp_dto) async {
-    final uri = Uri.parse('$_baseUrl/register_user/${otp_dto.OTP_Number}/${otp_dto.SessionID}');
+    final uri = Uri.parse('$_baseUrl/v2/verify-email-mobile/');
 
-    final response = await http.get(
+    final response = await http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(otp_dto.toJson()),
     );
     if (response.statusCode == 200) {
       return OTPResponse.fromJson(jsonDecode(response.body));

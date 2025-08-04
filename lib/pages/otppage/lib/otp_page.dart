@@ -18,6 +18,7 @@ class _OTPPageState extends State<OTPPage> {
 
   String  otp_code = '';
   String session_id = '';
+  String username = '';
 
   final TextEditingController otp_codeController = TextEditingController();
 
@@ -27,6 +28,7 @@ class _OTPPageState extends State<OTPPage> {
     if (arguments != null) {
       register_dto = arguments!['register_dto'] as SignUpDto?;
       session_id = arguments!['session_id'] as String? ?? '';
+      username = arguments!['username'] as String? ?? '';
     }
     return Scaffold(
       backgroundColor: Colors.white,
@@ -133,7 +135,7 @@ class _OTPPageState extends State<OTPPage> {
                     }
                     final otp_dto = OtpDto(
                       OTP_Number: otp_codeController.text.trim(),
-                      SessionID: session_id,
+                      Email: username,
                     );
                     try {
                       final data_response = await SignUpService.verifyOTP(otp_dto);

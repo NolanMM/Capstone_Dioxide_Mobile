@@ -177,6 +177,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Navigator.pushReplacementNamed(context, '/otp', arguments: {
                         'register_dto': register_dto,
                         'session_id': data_response.sessionId,
+                        'username': data_response.email,
                       });
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(

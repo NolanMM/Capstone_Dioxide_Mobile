@@ -1,22 +1,22 @@
 class OtpDto {
+  final String Email;
   final String OTP_Number;
-  final String SessionID;
-  
-  OtpDto({required this.OTP_Number, required this.SessionID});
+
+  OtpDto({required this.OTP_Number, required this.Email});
   Map<String, dynamic> toJson() {
     return {
-      'OTP_Number': OTP_Number,
-      'SessionID': SessionID,
+      'email': Email,
+      'otp': OTP_Number,
     };
   }
   factory OtpDto.fromJson(Map<String, dynamic> json) {
     return OtpDto(
-      OTP_Number: json['OTP_Number'] as String,
-      SessionID: json['SessionID'] as String,
+      OTP_Number: json['otp'] as String,
+      Email: json['email'] as String,
     );
   }
   @override
   String toString() {
-    return 'OtpDto(OTP_Number: $OTP_Number, SessionID: $SessionID)';
+    return 'OtpDto(OTP_Number: $OTP_Number, Email: $Email)';
   }
 }
