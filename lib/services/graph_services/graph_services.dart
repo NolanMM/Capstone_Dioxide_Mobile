@@ -65,57 +65,60 @@ class GraphService {
           .toList();
     }
 
-    static Future<List<HistoricalPrice>> fetchPredictions({
-    required String ticker,
-  }) async {
-    if (ticker.isEmpty) {
-      throw ArgumentError('Ticker cannot be empty');
+    static Future<List<HistoricalPrice>> fetchPredictions({required String ticker,}) async {
+      if (ticker.isEmpty) {
+        throw ArgumentError('Ticker cannot be empty');
+      }
+
+      final uri = Uri.parse('$_baseUrl/predict-stock/?symbol=$ticker');
+      try {
+        final response = await http.get(uri);
+
+        if (response.statusCode != 200) {
+          throw Exception(
+              'Failed to load predictions: ${response.statusCode} ${response.body}');
+        }
+        print('Response body: ${response.body}');
+        final Map<String, dynamic> decoded = json.decode(response.body);
+        final List<dynamic> forecastList = decoded['forecast'];
+
+        final List<String> datesStr = forecastList
+            .map((forecastItem) => forecastItem['date'] as String)
+            .toList();
+
+        final List<double> prices = forecastList
+            .map((forecastItem) => (forecastItem['price'] as num).toDouble())
+            .toList();
+
+        if (datesStr.length != prices.length) {
+          throw Exception(
+              'Mismatch between dates and prices in prediction response');
+        }
+
+        List<HistoricalPrice> predictedPrices = [];
+        for (int i = 0; i < datesStr.length; i++) {
+          final date = DateTime.parse(datesStr[i]);
+          final price = (prices[i] as num).toDouble();
+
+          predictedPrices.add(HistoricalPrice(
+            date: date,
+            close: price,
+            open: price,
+            high: price,
+            low: price,
+            volume: 0,
+            dividends: 0.0,
+            stockSymbol: ticker,
+            stockSplits: 0,
+            isPrediction: true,
+          ));
+        }
+        return predictedPrices;
+      } catch (e) {
+        print('Error fetching predictions: $e');
+        return []; // Return empty list on error
+      }
     }
-
-    final uri = Uri.parse('$_predictionApiBaseUrl/api/predict/?ticker=$ticker');
-    print('Fetching predictions from: $uri');
-
-    try {
-      final response = await http.get(uri);
-
-      if (response.statusCode != 200) {
-        throw Exception(
-            'Failed to load predictions: ${response.statusCode} ${response.body}');
-      }
-
-      final Map<String, dynamic> decoded = json.decode(response.body);
-      final List<String> datesStr = List<String>.from(decoded['dates']);
-      final List<dynamic> prices = decoded['predicted_prices'];
-
-      if (datesStr.length != prices.length) {
-        throw Exception(
-            'Mismatch between dates and prices in prediction response');
-      }
-
-      List<HistoricalPrice> predictedPrices = [];
-      for (int i = 0; i < datesStr.length; i++) {
-        final date = DateTime.parse(datesStr[i]);
-        final price = (prices[i] as num).toDouble();
-
-        predictedPrices.add(HistoricalPrice(
-          date: date,
-          close: price,
-          open: price,
-          high: price,
-          low: price,
-          volume: 0,
-          dividends: 0.0,
-          stockSymbol: ticker,
-          stockSplits: 0,
-          isPrediction: true,
-        ));
-      }
-      return predictedPrices;
-    } catch (e) {
-      print('Error fetching predictions: $e');
-      return []; // Return empty list on error
-    }
-  }
     
   static Future<List<HistoricalPriceDto>> fetchHistoricalPricesByDateType({
       required String symbol,
@@ -158,7 +161,7 @@ class GraphService {
     final end_day = end_Date.day.toString().padLeft(2, '0');
     final start_Date_string = '$start_year-$start_month-$start_day';
     final end_Date_string = '$end_year-$end_month-$end_day';
-    
+
     final uri = Uri.parse(
         '$_baseUrl/get_historical_prices_mobile_by_stocks_and_start_date_and_end_date/?symbol=$stockSymbol&start_date=$start_Date_string&end_date=$end_Date_string');
 
