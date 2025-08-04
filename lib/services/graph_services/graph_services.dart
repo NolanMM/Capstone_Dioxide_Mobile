@@ -7,8 +7,8 @@ import 'dart:io';
 
 class GraphService {
   static final _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
+      ? 'http://10.0.2.2:8000/api'
+      : 'http://127.0.0.1:8000/api';
       
   static const _predictionApiBaseUrl =
       'http://ec2-18-227-114-0.us-east-2.compute.amazonaws.com:8000';
@@ -16,7 +16,7 @@ class GraphService {
   static Future<List<StockAvailableDto>> getAvailableStockSymbols() async {
     try {
       final response =
-          await http.get(Uri.parse('$_baseUrl/stock/symbols/available'));
+          await http.get(Uri.parse('$_baseUrl/get_stocks_available_api/'));
       if (response.statusCode != 200) {
         throw Exception('Failed to load available stocks');
       }
@@ -52,7 +52,7 @@ class GraphService {
       if (symbol.isEmpty || days <= 0) {
         throw ArgumentError('Invalid symbol or days parameter');
       }
-      final uri = Uri.parse('$_baseUrl/get_stock_price_silver/$symbol/$days');
+      final uri = Uri.parse('$_baseUrl/get_historical_prices_mobile_by_stocks_and_days/?symbol=$symbol&days=$days');
       final response = await http.get(uri);
       if (response.statusCode != 200) {
         throw Exception(
@@ -117,7 +117,7 @@ class GraphService {
     }
   }
     
-    static Future<List<HistoricalPriceDto>> fetchHistoricalPricesByDateType({
+  static Future<List<HistoricalPriceDto>> fetchHistoricalPricesByDateType({
       required String symbol,
       required String startDate,
       required String endDate,
@@ -139,7 +139,7 @@ class GraphService {
           .map((e) => HistoricalPriceDto.fromJson(e as Map<String, dynamic>))
           .toList();
     }
-    static Future<List<HistoricalPrice>> fetchHistoricalPricesByDateRange(
+  static Future<List<HistoricalPrice>> fetchHistoricalPricesByDateRange(
     String stockSymbol,
     String startDate,
     String endDate,
@@ -147,9 +147,20 @@ class GraphService {
     if (stockSymbol.isEmpty || startDate.isEmpty || endDate.isEmpty) {
       throw ArgumentError('Symbol and date range cannot be empty.');
     }
-
+    print('Fetching historical prices for $stockSymbol from $startDate to $endDate');
+    final start_Date = DateTime.parse(startDate);
+    final end_Date = DateTime.parse(endDate);
+    final start_year = start_Date.year;
+    final start_month = start_Date.month.toString().padLeft(2, '0');
+    final start_day = start_Date.day.toString().padLeft(2, '0');
+    final end_year = end_Date.year;
+    final end_month = end_Date.month.toString().padLeft(2, '0');
+    final end_day = end_Date.day.toString().padLeft(2, '0');
+    final start_Date_string = '$start_year-$start_month-$start_day';
+    final end_Date_string = '$end_year-$end_month-$end_day';
+    
     final uri = Uri.parse(
-        '$_baseUrl/get_stock_price_silver/$stockSymbol/$startDate/$endDate');
+        '$_baseUrl/get_historical_prices_mobile_by_stocks_and_start_date_and_end_date/?symbol=$stockSymbol&start_date=$start_Date_string&end_date=$end_Date_string');
 
     try {
       final response = await http.get(uri);
