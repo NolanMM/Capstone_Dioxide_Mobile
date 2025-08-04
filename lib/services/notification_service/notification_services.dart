@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 
 class NewsService {
   static final String _baseUrl = Platform.isAndroid
-      ? 'https://10.0.2.2:7027/api/mobiledioxie'
-      : 'https://127.0.0.1:7027/api/mobiledioxie';
+      ? 'http://10.0.2.2:8000/api'
+      : 'http://127.0.0.1:8000/api';
 
   static Future<List<NewsArticle>> fetchArticles(int numberOfDays) async {
-    final url = Uri.parse('$_baseUrl/get_news_sentiment_by_days/$numberOfDays');
+    final url = Uri.parse('$_baseUrl/get_recent_news/?days=$numberOfDays');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

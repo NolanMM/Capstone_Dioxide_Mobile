@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User? user;
-  Future<List<NewsArticle>> _articlesFuture = NewsService.fetchArticles(7);
+  Future<List<NewsArticle>> _articlesFuture = Future.value([]);
   List<NewsArticle> _allArticles = [];
   int _visibleArticleCount = 5;
 
@@ -399,7 +399,7 @@ class _HomePageState extends State<HomePage> {
       onTap: () => NewsService.openInChrome(article.headline),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
         decoration: const BoxDecoration(
           border: Border(top: BorderSide(color: Colors.black, width: 1)),
         ),
