@@ -6,17 +6,16 @@ import 'dart:io';
 
 class AuthService {
   static final _baseUrl = Platform.isAndroid
-      ? 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie'
-      : 'https://capstonedioxiemobileserver-cfgqfudtbea6crd2.canadacentral-01.azurewebsites.net/api/mobiledioxie';
+      ? 'http://10.0.2.2:8000/api'
+      : 'http://127.0.0.1:8000/api';
 
   static Future<User> login(LoginDto dto) async {
-    final uri = Uri.parse('$_baseUrl/login_user');
-
-    final response = await http.post(
+    final uri = Uri.parse('$_baseUrl/v2/login/?email=${dto.username}&password=${dto.password}');
+    final response = await http.get(
       uri,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(dto.toJson()),
     );
+    
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));
     } else {

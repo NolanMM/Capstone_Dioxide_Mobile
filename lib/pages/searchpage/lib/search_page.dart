@@ -48,9 +48,9 @@ class _SearchPageState extends State<SearchPage> {
         _apiResponse = response;
       });
     } catch (e) {
-      setState(() {
-        _error = 'An error occurred: ${e.toString()}';
-      });
+      // setState(() {
+      //   _error = 'An error occurred: ${e.toString()}';
+      // });
     } finally {
       setState(() {
         _isLoading = false;
