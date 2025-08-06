@@ -8,8 +8,8 @@ import 'dart:io';
 
 class SignUpService {
   static final _baseUrl = Platform.isAndroid
-      ? 'http://10.0.2.2:8000/api'
-      : 'http://127.0.0.1:8000/api';
+      ? 'https://almanac.services/api'
+      : 'https://almanac.services/api';
 
   static Future<RegisterUserResponse> signup(SignUpDto signupdto) async {
     final uri = Uri.parse('$_baseUrl/v2/signup/');

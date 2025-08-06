@@ -7,8 +7,8 @@ import 'dart:io';
 class SearchService {
   //static const String _baseUrl = 'http://ec2-18-227-114-0.us-east-2.compute.amazonaws.com:8000/api/analyze/';
   static final _baseUrl = Platform.isAndroid
-      ? 'http://10.0.2.2:8000/api'
-      : 'http://127.0.0.1:8000/api';
+      ? 'https://almanac.services/api'
+      : 'https://almanac.services/api';
 
   static Future<SearchAnalysisApiResponse> analyzeQuery(String query) async {
     if (query.isEmpty) {

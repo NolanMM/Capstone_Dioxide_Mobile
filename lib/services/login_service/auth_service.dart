@@ -6,8 +6,8 @@ import 'dart:io';
 
 class AuthService {
   static final _baseUrl = Platform.isAndroid
-      ? 'http://10.0.2.2:8000/api'
-      : 'http://127.0.0.1:8000/api';
+      ? 'https://almanac.services/api'
+      : 'https://almanac.services/api';
 
   static Future<User> login(LoginDto dto) async {
     final uri = Uri.parse('$_baseUrl/v2/login/?email=${dto.username}&password=${dto.password}');
